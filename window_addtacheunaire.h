@@ -1,6 +1,7 @@
 #ifndef WINDOW_ADDTACHEUNAIRE_H
 #define WINDOW_ADDTACHEUNAIRE_H
 
+#include "QStringListModel"
 #include <QWidget>
 
 namespace Ui {
@@ -17,12 +18,13 @@ public:
 
 private:
     Ui::window_addtacheunaire *ui;
+    QStringListModel *modele;
 
 private slots:
     void click_tacheunaire();
     void click_tachepre();
     void click_prerequis();
-    void click_ok();
+    void click_bok();
 };
 
 #endif // WINDOW_ADDTACHEUNAIRE_H

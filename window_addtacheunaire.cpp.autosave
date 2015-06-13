@@ -92,6 +92,7 @@ void window_addtacheunaire::click_bok()
 
     if (ui->cb_prereq->isChecked()&&newTache!=NULL)
     {
+        /*
         QItemSelectionModel *selection = ui->list_prereq->selectionModel();
         QModelIndexList listeSelections = selection->selectedIndexes();
 
@@ -102,6 +103,7 @@ void window_addtacheunaire::click_bok()
             QMessageBox::critical(this, "Erreur", titreTache.toString());
             newTache->ajouterPrerequis(selectedTache);
         }
+        */
 
     }
 
