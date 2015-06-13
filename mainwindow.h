@@ -17,6 +17,10 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+private slots:
+    void click_aprojet();
+    void click_atache_simple();
 };
 
 #endif // MAINWINDOW_H

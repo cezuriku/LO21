@@ -24,7 +24,9 @@ SOURCES += main.cpp\
     programmation.cpp \
     model.cpp \
     tachemanager.cpp \
-    programmationmanager.cpp
+    programmationmanager.cpp \
+    window_addproject.cpp \
+    window_addtacheunaire.cpp
 
 HEADERS  += mainwindow.h \
     tache.h \
@@ -38,6 +40,10 @@ HEADERS  += mainwindow.h \
     programmation.h \
     model.h \
     tachemanager.h \
-    programmationmanager.h
+    programmationmanager.h \
+    window_addproject.h \
+    window_addtacheunaire.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    window_addproject.ui \
+    window_addtacheunaire.ui
