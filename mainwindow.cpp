@@ -4,7 +4,11 @@
 #include "window_addtacheunaire.h"
 #include "window_deleteproject.h"
 #include "window_arbo.h"
+<<<<<<< HEAD
+#include "window_addprog.h"
+=======
 #include <QLabel>
+>>>>>>> origin/master
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -14,6 +18,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->b_aprojet, SIGNAL(clicked()), this, SLOT(click_aprojet()));
     connect(ui->b_atache_simple, SIGNAL(clicked()), this, SLOT(click_atache_simple()));
     connect(ui->b_arbo, SIGNAL(clicked()), this, SLOT(click_arbo()));
+<<<<<<< HEAD
+    connect(ui->b_aprog, SIGNAL(clicked()), this, SLOT(click_aprog()));
+=======
     vl[0] = ui->vl1;
     vl[1] = ui->vl2;
     vl[2] = ui->vl3;
@@ -22,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :
     vl[5] = ui->vl6;
     vl[6] = ui->vl7;
     actualiserAgenda(QDate::currentDate());
+>>>>>>> origin/master
 }
 
 MainWindow::~MainWindow()
@@ -47,6 +55,12 @@ void MainWindow::click_arbo()
     fenetre->show();
 }
 
+<<<<<<< HEAD
+void MainWindow::click_aprog()
+{
+    window_addprog *fenetre = new window_addprog;
+    fenetre->show();
+=======
 void MainWindow::on_calendarWidget_activated(const QDate &date)
 {
     actualiserAgenda(date);
@@ -89,4 +103,5 @@ void MainWindow::remove(QLayout* layout)
 void MainWindow::on_calendarWidget_clicked(const QDate &date)
 {
     actualiserAgenda(date);
+>>>>>>> origin/master
 }
