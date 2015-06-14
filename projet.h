@@ -15,10 +15,18 @@ class Projet
 protected:
     QString titre;
     QDateTime disponibilite;
-    QDateTime echeance; //TODO virer echeance (calculée)
+    QDateTime echeance;
     std::vector<Tache *> taches;
 
+    /**
+     * @brief Constructeur de copie
+     * @param source le projet à copie
+     */
     Projet(const Projet& source);
+
+    /**
+     * @brief Operateur d'affectation pour empecher la copie (privé)
+     */
     Projet& operator=(const Projet& source);
 
 public:

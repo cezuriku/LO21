@@ -13,13 +13,33 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    /**
+     * @brief Constructeur par défaut
+     * @param parent
+     */
     explicit MainWindow(QWidget *parent = 0);
+    /**
+     * @brief Destructeur par défaut
+     */
     ~MainWindow();
 
 private:
     Ui::MainWindow *ui;
+    /**
+     * @brief Les Vertical Layout représentant les jours de la semaine
+     */
     QVBoxLayout* vl[7];
+
+    /**
+     * @brief actualise l'agenda à l'affichage
+     * @param date Une date de la semaine à afficher
+     */
     void actualiserAgenda(const QDate &date);
+
+    /**
+     * @brief Vide le layout de tout les éléments internes
+     * @param layout
+     */
     static void remove(QLayout* layout);
 
 private slots:

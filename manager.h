@@ -27,11 +27,31 @@ public:
     /// La liste concrète des objets
     std::list<Type *> liste;
 public:
+    /**
+     * @brief ~Manager
+     */
     virtual ~Manager();
-
+    /**
+     * @brief recupère la liste interne des objets
+     * @return la liste
+     */
     std::list<Type *>& getListe(){return liste;}
+
+    /**
+     * @brief ajoute un élément à la liste
+     * @param element le nouvel élément
+     */
     void ajouterElement(Type * element);
+
+    /**
+     * @brief supprime un élément de la liste
+     * @param element l'élément à supprimer
+     */
     void supprimerElement(Type * element);
+
+    /**
+     * @brief trie les éléments de la liste
+     */
     void trier();
 
     struct typeInferieur
