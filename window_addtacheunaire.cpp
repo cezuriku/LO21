@@ -11,6 +11,8 @@ window_addtacheunaire::window_addtacheunaire(QWidget *parent) :
     ui(new Ui::window_addtacheunaire)
 {
     ui->setupUi(this);
+
+    //Initialisation des groupbox
     ui->rb_unaire->setChecked(true);
     ui->gb_unaire->setEnabled(true);
     ui->cb_prereq->setChecked(false);
@@ -46,12 +48,24 @@ window_addtacheunaire::window_addtacheunaire(QWidget *parent) :
     ui->list_comp->setModel(modele2);
     ui->list_comp->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
+    //Configuration des dates
     QDateTime today = QDateTime::currentDateTime();
     ui->dt_dispo->setMinimumDateTime(today);
     ui->dt_ech->setMinimumDateTime(today);
     ui->dt_dispo->setDateTime(today.addDays(1));
     ui->dt_ech->setDateTime(today.addDays(1));
 
+    //Configuration du dropdown menu des projets
+    std::list<Projet*> projets = Model::getProjets();
+    std::list<Projet*>::iterator it3 = projets.begin();
+    for (unsigned int i = 0 ; i < projets.size() ; i++)
+    {
+        QString titre = (*it3)->getTitre();
+        ui->dd_projet->insertItem(i, titre);
+        it3++;
+    }
+
+    //Signaux et slots
     connect(ui->rb_preemp, SIGNAL(clicked()), this, SLOT(click_tachepre()));
     connect(ui->rb_unaire, SIGNAL(clicked()), this, SLOT(click_tacheunaire()));
     connect(ui->rb_comp, SIGNAL(clicked()), this, SLOT(click_tachecomp()));
@@ -107,19 +121,16 @@ void window_addtacheunaire::click_bok()
     if (ui->rb_preemp->isChecked())
     {
          newTache = new TacheUnitaire (ui->t_titre->text(), ui->dt_dispo->dateTime(), ui->dt_ech->dateTime(), ui->t_duree->time(), true);
-         Model::ajouterTache(newTache);
     }
     else if (ui->rb_unaire->isChecked())
     {
         newTache = new TacheUnitaire (ui->t_titre->text(), ui->dt_dispo->dateTime(), ui->dt_ech->dateTime(), ui->t_duree->time(), false);
-        Model::ajouterTache(newTache);
     }
     else
     {
         newTache = new TacheComposite (ui->t_titre->text(), ui->dt_dispo->dateTime(), ui->dt_ech->dateTime());
-        Model::ajouterTache(newTache);
 
-        QItemSelectionModel *selection_comp = ui->list_prereq->selectionModel();
+        QItemSelectionModel *selection_comp = ui->list_comp->selectionModel();
         QModelIndexList listeSelections_comp = selection_comp->selectedIndexes();
         for (int i = 0 ; i < listeSelections_comp.size() ; i++)
         {
@@ -131,6 +142,7 @@ void window_addtacheunaire::click_bok()
         }
     }
 
+    //gestion prérequis
     if (ui->cb_prereq->isChecked()&&newTache!=NULL)
     {
         QItemSelectionModel *selection = ui->list_prereq->selectionModel();
@@ -145,5 +157,23 @@ void window_addtacheunaire::click_bok()
                 newTache->ajouterPrerequis(selectedTache);
         }
     }
+
+    Model::ajouterTache(newTache);
+
+    //Insertion dans Projet
+    QVariant val = ui->dd_projet ->itemData(ui->dd_projet->currentIndex()) ;
+    QString titre_proj = val.toString();
+
+    std::list<Projet*> projets = Model::getProjets();
+    std::list<Projet*>::iterator it = projets.begin();
+    for (unsigned int i = 0 ; i < projets.size() ; i++)
+    {
+        QString titre = (*it)->getTitre();
+        if (titre == titre_proj)
+        {
+            (*it)->addElement(newTache);
+        }
+    }
+
     this->close();
 }
