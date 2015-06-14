@@ -33,7 +33,7 @@
       <x>790</x>
       <y>10</y>
       <width>231</width>
-      <height>171</height>
+      <height>121</height>
      </rect>
     </property>
     <property name="title">
@@ -65,27 +65,14 @@
       <string>Voir l'arborescence des projets</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="b_sprojet">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>120</y>
-       <width>211</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Supprimer un projet</string>
-     </property>
-    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_2">
     <property name="geometry">
      <rect>
       <x>790</x>
-      <y>190</y>
+      <y>160</y>
       <width>231</width>
-      <height>171</height>
+      <height>121</height>
      </rect>
     </property>
     <property name="title">
@@ -104,24 +91,11 @@
       <string>Ajouter une tâche simple</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="b_atache_compo">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>70</y>
-       <width>201</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Ajouter une tâche composite</string>
-     </property>
-    </widget>
     <widget class="QPushButton" name="b_stache">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>120</y>
+       <y>70</y>
        <width>201</width>
        <height>41</height>
       </rect>
@@ -135,7 +109,7 @@
     <property name="geometry">
      <rect>
       <x>790</x>
-      <y>380</y>
+      <y>310</y>
       <width>231</width>
       <height>121</height>
      </rect>
