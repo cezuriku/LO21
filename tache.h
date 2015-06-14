@@ -133,7 +133,20 @@ public:
      * @return
      */
     static bool verifierPrerequis(Tache* task,Tache * prerequisTask);
+
+    /**
+     * @brief verifie si la tache peut etre une tache "enfant" d'une autre tache
+     * @param tache
+     * @param tacheParente
+     * @return
+     */
     static bool verifierAttache(Tache* tache,Tache * tacheParente);
+
+    /**
+     * @brief compare les disponibilités des taches
+     * @param b
+     * @return vrai si la disponibilité est inférieur à celle de la tache b
+     */
     bool operator<(const Tache& b) const;
 
     struct compareTache
