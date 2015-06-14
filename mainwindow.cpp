@@ -4,6 +4,7 @@
 #include "window_addtacheunaire.h"
 #include "window_deleteproject.h"
 #include "window_arbo.h"
+#include "window_addprog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -14,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->b_aprojet, SIGNAL(clicked()), this, SLOT(click_aprojet()));
     connect(ui->b_atache_simple, SIGNAL(clicked()), this, SLOT(click_atache_simple()));
     connect(ui->b_arbo, SIGNAL(clicked()), this, SLOT(click_arbo()));
+    connect(ui->b_aprog, SIGNAL(clicked()), this, SLOT(click_aprog()));
 }
 
 MainWindow::~MainWindow()
@@ -36,5 +38,11 @@ void MainWindow::click_atache_simple()
 void MainWindow::click_arbo()
 {
     window_arbo *fenetre = new window_arbo;
+    fenetre->show();
+}
+
+void MainWindow::click_aprog()
+{
+    window_addprog *fenetre = new window_addprog;
     fenetre->show();
 }

@@ -27,7 +27,8 @@ SOURCES += main.cpp\
     programmationmanager.cpp \
     window_addproject.cpp \
     window_addtacheunaire.cpp \
-    window_arbo.cpp
+    window_arbo.cpp \
+    window_addprog.cpp
 
 HEADERS  += mainwindow.h \
     tache.h \
@@ -44,9 +45,11 @@ HEADERS  += mainwindow.h \
     programmationmanager.h \
     window_addproject.h \
     window_addtacheunaire.h \
-    window_arbo.h
+    window_arbo.h \
+    window_addprog.h
 
 FORMS    += mainwindow.ui \
     window_addproject.ui \
     window_addtacheunaire.ui \
-    window_arbo.ui
+    window_arbo.ui \
+    window_addprog.ui

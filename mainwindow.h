@@ -22,6 +22,7 @@ private slots:
     void click_aprojet();
     void click_atache_simple();
     void click_arbo();
+    void click_aprog();
 };
 
 #endif // MAINWINDOW_H
