@@ -46,12 +46,9 @@ private slots:
     void click_aprojet();
     void click_atache_simple();
     void click_arbo();
-<<<<<<< HEAD
     void click_aprog();
-=======
     void on_calendarWidget_activated(const QDate &date);
     void on_calendarWidget_clicked(const QDate &date);
->>>>>>> origin/master
 };
 
 #endif // MAINWINDOW_H
