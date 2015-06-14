@@ -1,6 +1,7 @@
 #include "window_arbo.h"
 #include "ui_window_arbo.h"
 #include "model.h"
+#include <QColor>
 
 window_arbo::window_arbo(QWidget *parent) :
     QWidget(parent),
@@ -8,14 +9,14 @@ window_arbo::window_arbo(QWidget *parent) :
 {
     ui->setupUi(this);
     modele =  new QStandardItemModel;
-    std::list<Projet*> projets = Model::getProjets();
-    std::list<Projet*>::iterator it = projets.begin();
-    for (unsigned int i = 0 ; i < projets.size() ; i++)
+    for (Projet* p : Model::getProjets())
     {
-        QString titre = (*it)->getTitre();
+        QString titre = p->getTitre();
         QStandardItem *item = new QStandardItem(titre);
+        item->setBackground(QBrush(Qt::GlobalColor::black));
+        item->setForeground(QBrush(Qt::GlobalColor::white));
         modele->appendRow(item);
-        //(*it)->afficher(item);
+        p->afficher(modele);
     }
 
     ui->treeView->header()->hide();

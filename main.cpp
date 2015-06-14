@@ -22,8 +22,19 @@ int main(int argc, char *argv[])
     Model::ajouterTache(t4);
     Model::ajouterTache(t34);
 
-    Projet* projet = new Projet("Projet 1 ", QDateTime::currentDateTime().addSecs(30), QDateTime::currentDateTime().addDays(5));
+    Projet* projet = new Projet("Projet 1", QDateTime::currentDateTime().addSecs(30), QDateTime::currentDateTime().addDays(5));
     Model::ajouterProjet(projet);
+    projet->addElement(t12);
+    projet->addElement(t34);
+
+    Projet* p2 = new Projet("Projet 2", QDateTime::currentDateTime().addSecs(30), QDateTime::currentDateTime().addDays(5));
+
+    TacheUnitaire* t5 = new TacheUnitaire(QString("T5"),QDateTime::currentDateTime().addDays(3),QDateTime::currentDateTime().addDays(4), QTime::fromString("3", "h"));
+    TacheUnitaire* t6 = new TacheUnitaire(QString("T6"),QDateTime::currentDateTime().addDays(3),QDateTime::currentDateTime().addDays(4), QTime::fromString("3", "h"));
+    p2->addElement(t5);
+    p2->addElement(t6);
+    Model::ajouterProjet(p2);
+
     Model::ajouterProgrammation(new Programmation(QDateTime::currentDateTime().addDays(1).addSecs(3600), "T1"));
 
     QApplication a(argc, argv);

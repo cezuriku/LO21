@@ -22,14 +22,6 @@ public:
     }
 
     /**
-     * @brief Recupere la liste des taches
-     * @return la liste des taches
-     */
-    static std::list<Tache*> getTaches() {
-        return TacheManager::getInstance()->getListe();
-    }
-
-    /**
      * @brief ajoute un projet dans le projet manager
      * @param projet le projet à ajouter
      */
@@ -38,20 +30,27 @@ public:
     }
 
     /**
-     * @brief Recupere la liste des projets
-     * @return la liste des projets
-     */
-    static std::list<Projet*> getProjets() {
-        return ProjetManager::getInstance()->getListe();
-    }
-
-
-    /**
      * @brief ajoute une programmation dans le programmation manager
      * @param programmation la programmation à ajouter
      */
     static void ajouterProgrammation(Programmation* programmation) {
         ProgrammationManager::getInstance()->ajouterElement(programmation);
+    }
+
+    /**
+     * @brief Recupere la liste des taches
+     * @return la liste des taches
+     */
+    static std::list<Tache*> getTaches() {
+        return TacheManager::getInstance()->getListe();
+    }
+
+    /**
+     * @brief Recupere la liste des projets
+     * @return la liste des projets
+     */
+    static std::list<Projet*> getProjets() {
+        return ProjetManager::getInstance()->getListe();
     }
 
     /**
