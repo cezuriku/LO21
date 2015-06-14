@@ -7,13 +7,24 @@
 #include <QStandardItemModel>
 #include <QVariant>
 
+/**
+ * Classe gérant une liste d'objets
+ */
 template<typename Type> class Manager
 {
 public:
+    /**
+     * @brief Constructeur par défaut
+     */
     Manager();
-    Manager(const Manager& copy);
-    Manager& operator=(const Manager& copy);
 
+    /**
+     * @brief Constructeur de copie
+     * @param copy le manager à copier
+     */
+    Manager(const Manager& copy);
+
+    /// La liste concrète des objets
     std::list<Type *> liste;
 public:
     virtual ~Manager();

@@ -36,6 +36,7 @@ int main(int argc, char *argv[])
     Model::ajouterProjet(p2);
 
     Model::ajouterProgrammation(new Programmation(QDateTime::currentDateTime().addDays(1).addSecs(3600), "T1"));
+    Model::ajouterProgrammation(new Programmation(QDateTime::currentDateTime().addDays(1).addSecs(3600 * 5), "T2"));
 
     QApplication a(argc, argv);
     MainWindow w;
