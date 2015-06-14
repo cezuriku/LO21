@@ -104,6 +104,93 @@ void window_addtacheunaire::click_tachecomp()
     ui->gb_compo->setEnabled(true);
 }
 
+void window_addtacheunaire::ajouter_prerequis(Tache * newTache)
+{
+    //gestion prérequis
+    if (ui->cb_prereq->isChecked()&&newTache!=NULL)
+    {
+        QItemSelectionModel *selection = ui->list_prereq->selectionModel();
+        QModelIndexList listeSelections = selection->selectedIndexes();
+
+        for (int i = 0 ; i < listeSelections.size() ; i++)
+        {
+            QVariant elementSelectionne = modele->data(listeSelections[i], Qt::DisplayRole);
+            QString titreTache = elementSelectionne.toString();
+
+            std::list<Tache*> taches = Model::getTaches();
+            std::list<Tache*>::iterator it = taches.begin();
+            for (unsigned int i = 0 ; i < taches.size() ; i++)
+            {
+                QString titre = (*it)->getTitre();
+                if (titre == titreTache)
+                {
+                    try
+                    {
+                        newTache->ajouterPrerequis((*it));
+                    }
+                    catch (CalendarException& e)
+                    {
+                        QMessageBox::critical(this, "Erreur", e.getInfo());
+                        return;
+
+                    }
+                }
+                it++;
+            }
+        }
+    }
+}
+
+void window_addtacheunaire::ajouterDansProjet(Tache* newTache)
+{
+    QString titre_proj = ui->dd_projet->currentText();
+
+    std::list<Projet*> projets = Model::getProjets();
+    std::list<Projet*>::iterator it = projets.begin();
+    for (unsigned int i = 0 ; i < projets.size() ; i++)
+    {
+        QString titre = (*it)->getTitre();
+        if (titre == titre_proj)
+        {
+            try
+            {
+                (*it)->addElement(newTache);
+            }
+            catch (CalendarException& e)
+            {
+                QMessageBox::critical(this, "Erreur", e.getInfo());
+                return;
+            }
+        }
+        it++;
+    }
+}
+
+void window_addtacheunaire::supprimerDeProjet(Tache * del_tache)
+{
+    QString titre_proj = ui->dd_projet->currentText();
+
+    std::list<Projet*> projets = Model::getProjets();
+    std::list<Projet*>::iterator it = projets.begin();
+    for (unsigned int i = 0 ; i < projets.size() ; i++)
+    {
+        QString titre = (*it)->getTitre();
+        if (titre == titre_proj)
+        {
+            try
+            {
+                (*it)->removeElement(del_tache);
+            }
+            catch (CalendarException& e)
+            {
+                QMessageBox::critical(this, "Erreur", e.getInfo());
+                return;
+            }
+        }
+        it++;
+    }
+}
+
 void window_addtacheunaire::click_bok()
 {
     if (ui->t_titre->text().isEmpty())
@@ -117,32 +204,89 @@ void window_addtacheunaire::click_bok()
         return;
     }
 
-    Tache* newTache;
     if (ui->rb_preemp->isChecked())
     {
-         newTache = new TacheUnitaire (ui->t_titre->text(), ui->dt_dispo->dateTime(), ui->dt_ech->dateTime(), ui->t_duree->time(), true);
+        TacheUnitaire * newTache;
+        try
+        {
+            newTache = new TacheUnitaire (ui->t_titre->text(), ui->dt_dispo->dateTime(), ui->dt_ech->dateTime(), ui->t_duree->time(), true);
+        }
+        catch (CalendarException& e)
+        {
+            QMessageBox::critical(this, "Erreur", e.getInfo());
+            return;
+        }
+        ajouter_prerequis(newTache);
+        Model::ajouterTache(newTache);
+        ajouterDansProjet(newTache);
     }
     else if (ui->rb_unaire->isChecked())
     {
-        newTache = new TacheUnitaire (ui->t_titre->text(), ui->dt_dispo->dateTime(), ui->dt_ech->dateTime(), ui->t_duree->time(), false);
+        TacheUnitaire * newTache;
+        try
+        {
+            newTache = new TacheUnitaire (ui->t_titre->text(), ui->dt_dispo->dateTime(), ui->dt_ech->dateTime(), ui->t_duree->time(), false);
+        }
+        catch (CalendarException& e)
+        {
+            QMessageBox::critical(this, "Erreur", e.getInfo());
+            return;
+        }
+        ajouter_prerequis(newTache);
+        Model::ajouterTache(newTache);
+        ajouterDansProjet(newTache);
     }
     else
     {
-        newTache = new TacheComposite (ui->t_titre->text(), ui->dt_dispo->dateTime(), ui->dt_ech->dateTime());
-
-        QItemSelectionModel *selection_comp = ui->list_comp->selectionModel();
-        QModelIndexList listeSelections_comp = selection_comp->selectedIndexes();
-        for (int i = 0 ; i < listeSelections_comp.size() ; i++)
+        TacheComposite * newTache;
+        try
         {
-            QVariant elementSelectionne_comp = modele->data(listeSelections_comp[i], Qt::DisplayRole);
-            //getTache ne renvoie pas de tache
-            Tache * selectedTache_comp = TacheManager::getTache(elementSelectionne_comp.toString());
-            if (selectedTache_comp!=NULL)
-            newTache->ajouterPrerequis(selectedTache_comp);
+            newTache = new TacheComposite (ui->t_titre->text(), ui->dt_dispo->dateTime(), ui->dt_ech->dateTime());
         }
+        catch (CalendarException& e)
+        {
+            QMessageBox::critical(this, "Erreur", e.getInfo());
+            return;
+
+        }
+
+        ajouter_prerequis(newTache);
+
+        QItemSelectionModel *selectionComp = ui->list_comp->selectionModel();
+        QModelIndexList listeSelectionsComp = selectionComp->selectedIndexes();
+
+        for (int i = 0 ; i < listeSelectionsComp.size() ; i++)
+        {
+            QVariant elem = modele->data(listeSelectionsComp[i], Qt::DisplayRole);
+            QString titreTache = elem.toString();
+
+            std::list<Tache*> taches = Model::getTaches();
+            std::list<Tache*>::iterator it = taches.begin();
+            for (unsigned int i = 0 ; i < taches.size() ; i++)
+            {
+                QString titre = (*it)->getTitre();
+                if (titre == titreTache)
+                {
+                    try
+                    {
+                        newTache->addElement((*it));
+                        supprimerDeProjet((*it));
+                    }
+                    catch (CalendarException& e)
+                    {
+                        QMessageBox::critical(this, "Erreur", e.getInfo());
+                        return;
+                    }
+                }
+                it++;
+            }
+        }
+        Model::ajouterTache(newTache);
+        ajouterDansProjet(newTache);
     }
 
     //gestion prérequis
+    /*
     if (ui->cb_prereq->isChecked()&&newTache!=NULL)
     {
         QItemSelectionModel *selection = ui->list_prereq->selectionModel();
@@ -151,18 +295,33 @@ void window_addtacheunaire::click_bok()
         for (int i = 0 ; i < listeSelections.size() ; i++)
         {
             QVariant elementSelectionne = modele->data(listeSelections[i], Qt::DisplayRole);
-            //getTache ne renvoie pas de tache
-            Tache * selectedTache = TacheManager::getTache(elementSelectionne.toString());
-            if (selectedTache!=NULL)
-                newTache->ajouterPrerequis(selectedTache);
+            QString titreTache = elementSelectionne.toString();
+
+            std::list<Tache*> taches = Model::getTaches();
+            std::list<Tache*>::iterator it = taches.begin();
+            for (unsigned int i = 0 ; i < taches.size() ; i++)
+            {
+                QString titre = (*it)->getTitre();
+                if (titre == titreTache)
+                {
+                    try
+                    {
+                        newTache->ajouterPrerequis((*it));
+                    }
+                    catch (CalendarException& e)
+                    {
+                        QMessageBox::critical(this, "Erreur", e.getInfo());
+                        return;
+
+                    }
+                }
+                it++;
+            }
         }
-    }
+    }*/
 
-    Model::ajouterTache(newTache);
-
-    //Insertion dans Projet
-    QVariant val = ui->dd_projet ->itemData(ui->dd_projet->currentIndex()) ;
-    QString titre_proj = val.toString();
+    /*
+    QString titre_proj = ui->dd_projet->currentText();
 
     std::list<Projet*> projets = Model::getProjets();
     std::list<Projet*>::iterator it = projets.begin();
@@ -171,9 +330,20 @@ void window_addtacheunaire::click_bok()
         QString titre = (*it)->getTitre();
         if (titre == titre_proj)
         {
-            (*it)->addElement(newTache);
+            try
+            {
+                (*it)->addElement(newTache);
+            }
+            catch (CalendarException& e)
+            {
+                QMessageBox::critical(this, "Erreur", e.getInfo());
+                return;
+
+            }
         }
+        it++;
     }
+    */
 
     this->close();
 }

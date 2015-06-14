@@ -1,6 +1,6 @@
 #ifndef WINDOW_ADDTACHEUNAIRE_H
 #define WINDOW_ADDTACHEUNAIRE_H
-
+#include "model.h"
 #include "QStringListModel"
 #include <QWidget>
 
@@ -27,6 +27,9 @@ private slots:
     void click_prerequis();
     void click_bok();
     void click_tachecomp();
+    void ajouter_prerequis(Tache *newTache);
+    void ajouterDansProjet(Tache* newTache);
+    void supprimerDeProjet(Tache * del_tache);
 };
 
 #endif // WINDOW_ADDTACHEUNAIRE_H
