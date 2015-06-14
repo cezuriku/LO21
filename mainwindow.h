@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QVBoxLayout>
 
 namespace Ui {
 class MainWindow;
@@ -17,11 +18,16 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QVBoxLayout* vl[7];
+    void actualiserAgenda(const QDate &date);
+    static void remove(QLayout* layout);
 
 private slots:
     void click_aprojet();
     void click_atache_simple();
     void click_arbo();
+    void on_calendarWidget_activated(const QDate &date);
+    void on_calendarWidget_clicked(const QDate &date);
 };
 
 #endif // MAINWINDOW_H
